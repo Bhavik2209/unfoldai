@@ -7,3 +7,4 @@ chromadb
 faiss-cpu
 langchain_google-genai
 langchain_community
+gunicorn
