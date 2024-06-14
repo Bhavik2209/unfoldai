@@ -23,6 +23,7 @@
             align-items: center;
             height: 100vh;
             text-align: center;
+            overflow:hidden;
         }
 
         h1 {
@@ -121,6 +122,9 @@
 </head>
 <body>
     <h1>UNFOLD AI</h1>
+    <div style="text-align: center;">
+        <p>Welcome to Unfold AI, the chatbot that delivers accurate answers by extracting information from your PDF documents.</p>
+    </div>  
     <div class="form-container">
         <form id="qnaForm" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
