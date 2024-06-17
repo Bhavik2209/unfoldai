@@ -38,7 +38,7 @@ def get_vector_store(text_chunks):
 
 def get_conversational_chain():
     prompt_template = """
-    Answer the question as detailed as possible from the provided context. Make sure to provide all the relevant details. If the answer is not available in the context, provide a brief overview in one or two lines.\n\n
+    analyze the provided context to answer the question. Include all relevant details and highlight their significance. If the answer can't be definitively found, offer a concise summary of the available information.\n\n
     Context:\n {context}?\n
     Question: \n{question}\n
 
