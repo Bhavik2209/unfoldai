@@ -1,0 +1,27 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "core/wsgi.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.12",
+        "maxLambdaSize": "15mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "core/wsgi.py"
+    }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "core.settings",
+    "PYTHON_VERSION": "3.12",
+    "PIP_INSTALL": "1",
+    "DJANGO_SUPERUSER_USERNAME": "admin",
+    "DJANGO_SUPERUSER_PASSWORD": "YourSecurePassword",
+    "DJANGO_SUPERUSER_EMAIL": "admin@example.com"
+  }
+}

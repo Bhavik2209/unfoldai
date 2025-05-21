@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Python
+*.pyc
+__pycache__/
+venv/
+*.env
+.env
+
+# Django specific
+*.log
+db.sqlite3 # If you're using a managed database in production
+           # and db.sqlite3 is only for local development.
+           # Keep if Vercel should use this SQLite (not recommended for production)
+
+# IDE / Editor specific
+.vscode/
+.idea/
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# FAISS index files (if they are large and rebuilt on Vercel, or if data is sensitive)
+# faiss_index/ # Consider if these should be ignored or deployed.
+               # If they are built from PDFs uploaded by users in production,
+               # they might need to be on a persistent volume or rebuilt.
+               # For now, let's assume they might be part of the initial deployment
+               # or handled by application logic post-deployment.
+               # So, let's NOT add faiss_index/ to .vercelignore by default
+               # unless the user specifies these should be excluded.
