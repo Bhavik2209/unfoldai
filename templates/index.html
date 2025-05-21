@@ -9,6 +9,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Jaini+Purva&family=Micro+5+Charted&family=Patua+One&family=Righteous&display=swap" rel="stylesheet">
     <style>
+        /* Django messages styling */
+        .messages {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 0 20px 0; /* Add some margin below messages */
+            width: 80%;
+            max-width: 500px; /* Consistent with other containers */
+            text-align: center; /* Center messages */
+        }
+        .messages li {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        .messages li.success {
+            background-color: rgba(76, 175, 80, 0.7); /* Green */
+        }
+        .messages li.info {
+            background-color: rgba(33, 150, 243, 0.7); /* Blue */
+        }
+        .messages li.warning {
+            background-color: rgba(255, 152, 0, 0.7); /* Orange */
+        }
+        .messages li.error {
+            background-color: rgba(244, 67, 54, 0.7); /* Red */
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -100,31 +128,48 @@
             overflow-y: auto;
         }
 
-        /* Popup message styling */
-        .popup-message {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px;
-            background-color: rgba(97,238,14,0.5);
-            color: white;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .popup-show {
-            display: block;
-            transform: translateY(-10px);
-        }
     </style>
 </head>
 <body>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        <script>
+            // Optional: Auto-hide messages after a few seconds
+            setTimeout(function() {
+                var messages = document.querySelectorAll('.messages li');
+                messages.forEach(function(message) {
+                    // Simple fade out effect
+                    message.style.transition = 'opacity 0.5s ease';
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.style.display = 'none';
+                    }, 500); // Wait for fade out to complete
+                });
+            }, 7000); // Hide after 7 seconds
+        </script>
+    {% endif %}
     <h1>UNFOLD AI</h1>
     <div style="text-align: center;">
         <p>Welcome to Unfold AI, the chatbot that delivers accurate answers by extracting information from your PDF documents.</p>
-    </div>  
+    </div>
+
+    <div class="available-docs-container" style="width: 80%; max-width: 500px; margin-bottom: 20px;">
+        <h2>Available Documents</h2>
+        {% if indexed_files %}
+            <ul style="list-style-type: none; padding: 0; max-height: 150px; overflow-y: auto; background-color: rgba(255, 255, 255, 0.1); border-radius: 5px; padding: 10px;">
+            {% for file_name in indexed_files %}
+                <li style="padding: 5px 0;">{{ file_name }}</li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No documents have been indexed yet.</p>
+        {% endif %}
+    </div>
+      
     <div class="form-container">
         <form id="qnaForm" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -143,11 +188,6 @@
             <button type="submit" class="button">Get Answer</button>
         </form>
     </div>
-    <!-- Popup message div -->
-    {% if file_uploaded %}
-    <div class="popup-message popup-show">
-        File uploaded successfully !
-    </div>
-    {% endif %}
+    <!-- Old Popup message div removed -->
 </body>
 </html>
